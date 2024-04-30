@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class Gun : MonoBehaviour
 {
+    public GameObject _bullet;
     // Start is called before the first frame update
-    public GameObject[] _fracturePool;
     void Start()
     {
         
@@ -15,5 +15,11 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         
+    }
+    
+    public void Fire()
+    {
+        Instantiate(_bullet);
+        _bullet.GetComponent<Projectile>()._moveDirection = Vector3.forward;
     }
 }
