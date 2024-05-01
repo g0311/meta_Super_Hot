@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Pawn"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             GameMode._instance.PawnKilled(collision.gameObject);
         }
