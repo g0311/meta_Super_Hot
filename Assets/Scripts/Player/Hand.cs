@@ -7,6 +7,7 @@ public class Hand : MonoBehaviour
     // Start is called before the first frame update
     public bool _isLeft = true;
     public GameObject _weapon = null;
+    private Vector3 _prevPos;
 
     // Update is called once per frame
     void Update()
@@ -42,6 +43,10 @@ public class Hand : MonoBehaviour
                 //RB 있어야.. 속도 유지됨
             } //총 던지기
         }
+
+        float moveDistance = Vector3.Distance(_prevPos, transform.position);
+        GameMode._instance._deltaTime = moveDistance * 0.1f;
+        _prevPos = transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)

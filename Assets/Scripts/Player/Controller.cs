@@ -4,15 +4,6 @@ using UnityEngine;
 
 public abstract class Controller : MonoBehaviour
 {
-    public bool _isAlive;
+    public bool _isAlive = true;
     public abstract void PawnDeath();
-
-    protected void Move()
-    {
-
-    }
-    protected void Rotate()
-    {
-
-    }
 }

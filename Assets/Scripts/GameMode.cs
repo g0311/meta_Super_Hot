@@ -16,7 +16,7 @@ public class GameMode : MonoBehaviour
     }
 
 
-    public float _deltaTime; //플레이어 컨트롤러에서 지정
+    public float _deltaTime = 0; //플레이어 컨트롤러에서 지정
 
     // Update is called once per frame
     void Update()

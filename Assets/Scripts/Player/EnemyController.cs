@@ -6,14 +6,16 @@ public class EnemyController : Controller
 {
     // Start is called before the first frame update
     public GameObject[] _fracturePool;
+    public GameObject _weapon;
     public int _fractureCount = 14;
+    public float _speed;
     void Start()
     {
     }
 
     // Update is called once per frame
     void Update()
-    {   
+    {
     }
     public override void PawnDeath()
     {
@@ -26,5 +28,19 @@ public class EnemyController : Controller
             _fracturePool[i].SetActive(true);
             childTransform.gameObject.SetActive(false);
         }
-    }    
+        _weapon.GetComponent<Rigidbody>().useGravity = true;
+    }
+
+    public void Move() //앞으로만 이동
+    {
+        Transform curTr = transform;
+        transform.localPosition *= _speed * GameMode._instance._deltaTime;
+    }
+    public void Rotate(int isRight) //회전 //1일 시 우회전
+    {
+        Transform curTr = transform;
+        //transform.localPosition *= _speed * isRight;
+    }
 }
+
+//건 포워드 벡터로 플레이어 위치 맞추기
