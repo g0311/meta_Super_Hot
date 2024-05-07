@@ -6,22 +6,42 @@ public class GameMode : MonoBehaviour
 {
     public static GameMode _instance;
 
-    public GameMode Instance()
+    public static GameMode Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameMode>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject("GameMode");
+                    _instance = obj.AddComponent<GameMode>();
+                }
+            }
+            return _instance;
+        }
+    }
+
+    private void Awake()
     {
         if (_instance == null)
         {
-            _instance = new GameMode();
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-        return _instance;
+        else if (_instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
-
-
-    public float _deltaTime = 0; //ÇÃ·¹ÀÌ¾î ÄÁÆ®·Ñ·¯¿¡¼­ ÁöÁ¤
+    public float _deltaTime = 0; //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     // Update is called once per frame
     void Update()
     {
-        //½Â¸® Á¶°Ç ÆÄ¾Ç
+        //ï¿½Â¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¾ï¿½
+        //Debug.Log("dt : " + _deltaTime);
     }
     public void PawnKilled(GameObject gameObject)
     {

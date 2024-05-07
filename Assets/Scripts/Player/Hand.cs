@@ -13,57 +13,66 @@ public class Hand : MonoBehaviour
     void Update()
     {
         if (_isLeft)
-        { //¿Þ¼Õ
+        { //ï¿½Þ¼ï¿½
             if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && _weapon)
             {
                 _weapon.GetComponent<Gun>().Fire();
-            } //¹ß»ç
+            } //ï¿½ß»ï¿½
 
             if (OVRInput.GetDown(OVRInput.Button.Three))
             {
                 _weapon.transform.SetParent(null);
                 GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
                 _weapon.GetComponent<Projectile>().enabled = true;
-            } //ÃÑ ´øÁö±â
+                _weapon.GetComponent<Projectile>()._isGravity = true;
+
+                _weapon.GetComponent<Rigidbody>().isKinematic = false;
+                _weapon.GetComponent<CapsuleCollider>().enabled = true;
+            } //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
         else
-        { //¿À¸¥¼Õ
+        { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger) && _weapon)
             {
                 _weapon.GetComponent<Gun>().Fire();
-            } //¹ß»ç
+            } //ï¿½ß»ï¿½
 
             if (OVRInput.GetDown(OVRInput.Button.One))
             {
-                //ÃÑ °èÃþ ¾ø¾Ö±â
+                //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½
                 _weapon.transform.SetParent(null);
-                //¼Õ ¸Þ½¬ Å°±â
+                //ï¿½ï¿½ ï¿½Þ½ï¿½ Å°ï¿½ï¿½
                 GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+                _weapon.GetComponent<Rigidbody>().isKinematic = false;
                 _weapon.GetComponent<Projectile>().enabled = true;
-                //RB ÀÖ¾î¾ß.. ¼Óµµ À¯ÁöµÊ
-            } //ÃÑ ´øÁö±â
+                _weapon.GetComponent<Projectile>()._isGravity = true;
+                _weapon.GetComponent<CapsuleCollider>().enabled = true;
+            } //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
 
         float moveDistance = Vector3.Distance(_prevPos, transform.position);
-        GameMode._instance._deltaTime = moveDistance * 0.1f;
+        Debug.Log("move distance = " + moveDistance);
+        GameMode.Instance._deltaTime = moveDistance * 0.0000001f;
         _prevPos = transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)
-    {   //ÃÑÀÌ ºÎµúÇûÀ»¶§
+    {   //ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (collision.gameObject.CompareTag("Weapon")
                 &&
                 !_weapon)
         {
             _weapon = collision.gameObject;
-            //¹«±âµµ Ãæµ¹Ã¼, °¡Áö°í ÀÖÀ» ¶© »ç¿ëÀÚ¿¡°Ô °ø°Ý ¹ÞÀ¸¸é ¾ÈµÊ
+            //ï¿½ï¿½ï¿½âµµ ï¿½æµ¹Ã¼, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½
             _weapon.GetComponent<Projectile>().enabled = false;
 
-            //¼Õ ¸Þ½Ã ²¨¹ö¸®±â
+            //ï¿½ï¿½ ï¿½Þ½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-            _weapon.transform.SetParent(collision.gameObject.transform);
-            //transform.position = ~~~
-            //transform.rotation = ~~~
+            _weapon.GetComponent<Rigidbody>().isKinematic = true;
+            _weapon.GetComponent<CapsuleCollider>().enabled = false;
+            _weapon.transform.SetParent(gameObject.transform);
+            _weapon.transform.localPosition = Vector3.zero;
+            _weapon.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
     }
 }

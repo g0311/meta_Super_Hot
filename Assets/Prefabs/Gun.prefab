@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7437345824571855951}
   - component: {fileID: 5807700726005636074}
   - component: {fileID: 8610300037442367264}
-  - component: {fileID: 6970582534256751546}
   - component: {fileID: 6970582534256751547}
   - component: {fileID: -8070117937882703385}
   - component: {fileID: -6154283997609986855}
+  - component: {fileID: 622377165392712129}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Weapon
@@ -87,19 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6970582534256751546
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7817424542529703669}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.0011103645, y: 0.0011000001, z: 0.0033088713}
-  m_Center: {x: -0.00001924709, y: 8.731149e-11, z: -0.00096368033}
 --- !u!54 &6970582534256751547
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -128,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91fabf097834aea49ae628c269feb47c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bullet: {fileID: 3890928546631569695, guid: 70065a5ce893fff429eac972f9fbf7cb, type: 3}
+  _bullet: {fileID: 3491577402279344524, guid: 70065a5ce893fff429eac972f9fbf7cb, type: 3}
 --- !u!114 &-6154283997609986855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,3 +130,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveDirection: {x: 0, y: 0, z: 0}
   _speed: 0
+  _isGravity: 0
+--- !u!136 &622377165392712129
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7817424542529703669}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.0016480197
+  m_Height: 0.0015002072
+  m_Direction: 0
+  m_Center: {x: -0.000051528776, y: -0.000056535835, z: -0.0010590326}
