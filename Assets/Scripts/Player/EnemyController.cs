@@ -31,16 +31,16 @@ public class EnemyController : Controller
         _weapon.GetComponent<Rigidbody>().useGravity = true;
     }
 
-    public void Move() //¾ÕÀ¸·Î¸¸ ÀÌµ¿
+    public void Move() //ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ ï¿½Ìµï¿½
     {
         Transform curTr = transform;
         transform.localPosition *= _speed * GameMode._instance._deltaTime;
     }
-    public void Rotate(int isRight) //È¸Àü //1ÀÏ ½Ã ¿ìÈ¸Àü
+    public void Rotate(int isRight) //È¸ï¿½ï¿½ //1ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½
     {
         Transform curTr = transform;
         //transform.localPosition *= _speed * isRight;
     }
 }
 
-//°Ç Æ÷¿öµå º¤ÅÍ·Î ÇÃ·¹ÀÌ¾î À§Ä¡ ¸ÂÃß±â
+//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í·ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ß±
