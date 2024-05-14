@@ -16,8 +16,8 @@ public class PlayerController : Controller
     void Update()
     {
         float moveDistance = Vector3.Distance(_prevPos, _centerEye.transform.position);
-        //Debug.Log("move distance = " + moveDistance);
-        GameMode.Instance._deltaTime = moveDistance * 1f;
+        GameMode.Instance.SetDeltaTime(moveDistance);
+        Debug.Log("deltaTime = " + GameMode._instance._deltaTime);
         _prevPos = _centerEye.transform.position;
     }
 

@@ -12,61 +12,67 @@ public class Hand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_isLeft)
-        { //�޼�
-            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) && _weapon)
-            {
-                _weapon.GetComponent<Gun>().Fire();
-            } //�߻�
+        if (_weapon)
+        {
+            if (_isLeft)
+            { //left
+                if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+                {
+                    _weapon.GetComponent<Gun>().Fire();
+                } //
 
-            if (OVRInput.GetDown(OVRInput.Button.Three))
-            {
-                _weapon.transform.SetParent(null);
-                GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-                _weapon.GetComponent<Projectile>().enabled = true;
-                _weapon.GetComponent<Projectile>()._isGravity = true;
+                if (OVRInput.GetDown(OVRInput.Button.Three))
+                {
+                    _weapon.transform.SetParent(null);
+                    GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+                    _weapon.GetComponent<Projectile>().enabled = true;
+                    _weapon.GetComponent<Projectile>()._isGravity = true;
 
-                _weapon.GetComponent<Rigidbody>().isKinematic = false;
-                _weapon.GetComponent<CapsuleCollider>().enabled = true;
-            } //�� ������
-        }
-        else
-        { //������
-            if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger) && _weapon)
-            {
-                _weapon.GetComponent<Gun>().Fire();
-            } //�߻�
+                    _weapon.GetComponent<Rigidbody>().isKinematic = false;
+                    _weapon.GetComponent<CapsuleCollider>().enabled = true;
 
-            if (OVRInput.GetDown(OVRInput.Button.One))
-            {
-                //�� ���� ���ֱ�
-                _weapon.transform.SetParent(null);
-                //�� �޽� Ű��
-                GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-                _weapon.GetComponent<Rigidbody>().isKinematic = false;
-                _weapon.GetComponent<Projectile>().enabled = true;
-                _weapon.GetComponent<Projectile>()._isGravity = true;
-                _weapon.GetComponent<CapsuleCollider>().enabled = true;
-            } //�� ������
+                    _weapon = null;
+                } //weapon is projectile too
+            }
+            else
+            { //right
+                if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+                {
+                    _weapon.GetComponent<Gun>().Fire();
+                    Debug.Log("trigger clicked");
+                } //
+
+                if (OVRInput.GetDown(OVRInput.Button.One))
+                {
+                    _weapon.transform.SetParent(null);
+                    GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+                    _weapon.GetComponent<Projectile>().enabled = true;
+                    _weapon.GetComponent<Projectile>()._isGravity = true;
+
+                    _weapon.GetComponent<Rigidbody>().isKinematic = false;
+                    _weapon.GetComponent<CapsuleCollider>().enabled = true;
+
+                    _weapon.gameObject.tag = "Finish";
+
+                    _weapon = null;
+                }
+            }
         }
 
         float moveDistance = Vector3.Distance(_prevPos, transform.position);
-        Debug.Log("move distance = " + moveDistance);
-        GameMode.Instance._deltaTime = moveDistance * 0.0000001f;
+        GameMode.Instance.SetDeltaTime(moveDistance);
         _prevPos = transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)
-    {   //���� �ε�������
+    {//grab gun 
         if (collision.gameObject.CompareTag("Weapon")
                 &&
                 !_weapon)
         {
             _weapon = collision.gameObject;
-            //���⵵ �浹ü, ������ ���� �� ����ڿ��� ���� ������ �ȵ�
             _weapon.GetComponent<Projectile>().enabled = false;
 
-            //�� �޽� ��������
             GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
             _weapon.GetComponent<Rigidbody>().isKinematic = true;
             _weapon.GetComponent<CapsuleCollider>().enabled = false;

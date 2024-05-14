@@ -35,14 +35,22 @@ public class GameMode : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public float _deltaTime = 0; //�÷��̾� ��Ʈ�ѷ����� ����
+    public float _deltaTime = 0;
 
     // Update is called once per frame
     void Update()
     {
-        //�¸� ���� �ľ�
-        //Debug.Log("dt : " + _deltaTime);
+        _deltaTime = 0;
     }
+
+    public void SetDeltaTime(float moveDistance)
+    {
+        if(_deltaTime <= moveDistance * 0.1f)
+        {
+            _deltaTime = moveDistance * 0.1f;
+        }
+    }
+
     public void PawnKilled(GameObject gameObject)
     {
         gameObject.GetComponent<Controller>().PawnDeath();

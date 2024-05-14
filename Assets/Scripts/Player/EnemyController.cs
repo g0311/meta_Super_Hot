@@ -27,20 +27,19 @@ public class EnemyController : Controller
             _fracturePool[i].transform.localScale = childTransform.localScale;
             _fracturePool[i].SetActive(true);
             childTransform.gameObject.SetActive(false);
+            //turn on the kinematic
         }
         _weapon.GetComponent<Rigidbody>().useGravity = true;
     }
 
-    public void Move() //�����θ� �̵�
+    public void Move()
     {
         Transform curTr = transform;
         transform.localPosition *= _speed * GameMode._instance._deltaTime;
     }
-    public void Rotate(int isRight) //ȸ�� //1�� �� ��ȸ��
+    public void Rotate(int isRight)
     {
         Transform curTr = transform;
         //transform.localPosition *= _speed * isRight;
     }
 }
-
-//�� ������ ���ͷ� �÷��̾� ��ġ ���߱

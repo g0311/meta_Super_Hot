@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     public GameObject _bullet;
+    public Transform _bulletStartTransform;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,14 +18,17 @@ public class Gun : MonoBehaviour
         
     }
 
-    public void Fire(Vector3 moveDirection = default(Vector3))
+    public void Fire(Vector3 moveDirection = default)
     {
-        if (moveDirection == default(Vector3))
+        if (moveDirection == default)
         {
             moveDirection = new Vector3(0, 0, 1);
         }
-
         GameObject obj = Instantiate(_bullet);
-        obj.GetComponent<Projectile>()._moveDirection = moveDirection;
+        //set transform
+        obj.transform.position = _bulletStartTransform.position;
+        obj.transform.rotation = transform.rotation;
+        //set direction 
+        obj.GetComponentInChildren<Projectile>()._moveDirection = moveDirection;
     }
 }

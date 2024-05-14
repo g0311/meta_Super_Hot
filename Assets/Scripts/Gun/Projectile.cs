@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     public Vector3 _moveDirection;
     public float _speed = 10;
     public bool _isGravity = false;
+    public bool _isKillable = true;
 
     // Update is called once per frame
     void Update()
@@ -18,14 +19,19 @@ public class Projectile : MonoBehaviour
             prevPos.y -= 9.8f * GameMode._instance._deltaTime;
         }
         transform.localPosition = prevPos;
+        Debug.Log("_speed : " + _speed + " _deltaTime : " + GameMode._instance._deltaTime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (_isKillable)
         {
-            GameMode._instance.PawnKilled(collision.gameObject);
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                GameMode._instance.PawnKilled(collision.gameObject);
+                Destroy(this);
+            }
+
         }
-        Destroy(this);
     }
 }
