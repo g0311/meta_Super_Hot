@@ -26,12 +26,14 @@ public class Hand : MonoBehaviour
                     _weapon.transform.SetParent(null);
                     GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
                     _weapon.GetComponent<Projectile>().enabled = true;
-                    _weapon.GetComponent<Projectile>()._isGravity = true;
-
+                    _weapon.GetComponent<Projectile>()._useGravity = true;
                     _weapon.GetComponent<Rigidbody>().isKinematic = false;
-                    _weapon.GetComponent<CapsuleCollider>().enabled = true;
+                    _weapon.GetComponent<BoxCollider>().enabled = true;
 
+                    _weapon.gameObject.tag = "Finish";
+                    Debug.Log("drop gun");
                     _weapon = null;
+                    Debug.Log("dropped gun" + _weapon);
                 } //weapon is projectile too
             }
             else
@@ -39,18 +41,16 @@ public class Hand : MonoBehaviour
                 if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
                 {
                     _weapon.GetComponent<Gun>().Fire();
-                    Debug.Log("trigger clicked");
-                } //
+                }
 
                 if (OVRInput.GetDown(OVRInput.Button.One))
                 {
                     _weapon.transform.SetParent(null);
                     GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
                     _weapon.GetComponent<Projectile>().enabled = true;
-                    _weapon.GetComponent<Projectile>()._isGravity = true;
-
+                    _weapon.GetComponent<Projectile>()._useGravity = true;
                     _weapon.GetComponent<Rigidbody>().isKinematic = false;
-                    _weapon.GetComponent<CapsuleCollider>().enabled = true;
+                    _weapon.GetComponent<BoxCollider>().enabled = true;
 
                     _weapon.gameObject.tag = "Finish";
 
@@ -75,10 +75,10 @@ public class Hand : MonoBehaviour
 
             GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
             _weapon.GetComponent<Rigidbody>().isKinematic = true;
-            _weapon.GetComponent<CapsuleCollider>().enabled = false;
+            _weapon.GetComponent<BoxCollider>().enabled = false;
             _weapon.transform.SetParent(gameObject.transform);
             _weapon.transform.localPosition = Vector3.zero;
-            _weapon.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            _weapon.transform.localRotation = Quaternion.Euler(0, 90, 90);
         }
     }
 }

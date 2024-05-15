@@ -6,20 +6,22 @@ public class Projectile : MonoBehaviour
 {
     public Vector3 _moveDirection;
     public float _speed = 10;
-    public bool _isGravity = false;
+    public bool _useGravity = false;
     public bool _isKillable = true;
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 prevPos = transform.localPosition; 
-        prevPos.z += _speed * GameMode._instance._deltaTime;
-        if(_isGravity)
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (!_useGravity)
         {
-            prevPos.y -= 9.8f * GameMode._instance._deltaTime;
+            rb.velocity = _moveDirection * GameMode.Instance._deltaTime * _speed;
         }
-        transform.localPosition = prevPos;
-        Debug.Log("_speed : " + _speed + " _deltaTime : " + GameMode._instance._deltaTime);
+        else
+        {
+            _moveDirection += new Vector3(0, -7.0f, 0);
+            rb.velocity = _moveDirection * GameMode.Instance._deltaTime * _speed;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -29,9 +31,14 @@ public class Projectile : MonoBehaviour
             if (collision.gameObject.CompareTag("Player"))
             {
                 GameMode._instance.PawnKilled(collision.gameObject);
-                Destroy(this);
+                _isKillable = false;
             }
 
         }
+    }
+    
+    public void SetMoveDirection(Vector3 moveDirection)
+    {
+        _moveDirection = moveDirection;
     }
 }

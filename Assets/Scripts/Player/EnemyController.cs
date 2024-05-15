@@ -29,7 +29,8 @@ public class EnemyController : Controller
             childTransform.gameObject.SetActive(false);
             //turn on the kinematic
         }
-        _weapon.GetComponent<Rigidbody>().useGravity = true;
+        if(!_weapon)
+            _weapon.GetComponent<Rigidbody>().useGravity = true;
     }
 
     public void Move()

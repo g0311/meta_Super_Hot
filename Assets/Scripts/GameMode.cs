@@ -40,14 +40,14 @@ public class GameMode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _deltaTime = 0;
+        _deltaTime = 0.01f;
     }
 
     public void SetDeltaTime(float moveDistance)
     {
-        if(_deltaTime <= moveDistance * 0.1f)
+        if(_deltaTime <= moveDistance * 10)
         {
-            _deltaTime = moveDistance * 0.1f;
+            _deltaTime = moveDistance * 10;
         }
     }
 
