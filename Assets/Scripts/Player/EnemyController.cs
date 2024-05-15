@@ -38,9 +38,8 @@ public class EnemyController : Controller
         Transform curTr = transform;
         transform.localPosition *= _speed * GameMode._instance._deltaTime;
     }
-    public void Rotate(int isRight)
+    public void Rotate(Quaternion lookRotation)
     {
-        Transform curTr = transform;
-        //transform.localPosition *= _speed * isRight;
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, GameMode.Instance._deltaTime * 10);
     }
 }

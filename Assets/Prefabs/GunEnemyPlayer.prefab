@@ -1005,7 +1005,8 @@ GameObject:
   - component: {fileID: 5956455352431229922}
   - component: {fileID: 5956455352431229949}
   - component: {fileID: 5956455352431229948}
-  - component: {fileID: 2992055125646034751}
+  - component: {fileID: 6013957606566185378}
+  - component: {fileID: 5631764322883285659}
   m_Layer: 0
   m_Name: GunEnemyPlayer
   m_TagString: Player
@@ -1093,11 +1094,11 @@ MonoBehaviour:
   - {fileID: 5956455352679527656}
   - {fileID: 5956455352970411766}
   - {fileID: 5956455352436647860}
-  _weapon: {fileID: 0}
+  _weapon: {fileID: 5956935400930801814}
   _fractureCount: 14
   _speed: 0
---- !u!136 &2992055125646034751
-CapsuleCollider:
+--- !u!65 &6013957606566185378
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1106,10 +1107,26 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.16597392
-  m_Height: 1.9173834
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9763155, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.37104288, y: 1.9516201, z: 0.440669}
+  m_Center: {x: -0.05674147, y: 0.97742045, z: -0.0059310184}
+--- !u!114 &5631764322883285659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5956455352431229951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29322e474d61e44f8f46034a876c96c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackRange: 10
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  _animator: {fileID: 5956455352431229949}
 --- !u!1 &5956455352436647860
 GameObject:
   m_ObjectHideFlags: 0
@@ -6094,8 +6111,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 120.349
       objectReference: {fileID: 0}
+    - target: {fileID: 5907787085460823731, guid: a29745b88073f084f93a4d5863051e14, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5907787085460823731, guid: a29745b88073f084f93a4d5863051e14, type: 3}
+      propertyPath: _useGravity
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a29745b88073f084f93a4d5863051e14, type: 3}
+--- !u!1 &5956935400930801814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2923972363979175156, guid: a29745b88073f084f93a4d5863051e14, type: 3}
+  m_PrefabInstance: {fileID: 8808830246249057378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6239695031565058283 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3217991131666107529, guid: a29745b88073f084f93a4d5863051e14, type: 3}

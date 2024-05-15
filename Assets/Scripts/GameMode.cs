@@ -23,6 +23,8 @@ public class GameMode : MonoBehaviour
         }
     }
 
+    public GameObject _player;
+
     private void Awake()
     {
         if (_instance == null)
@@ -57,13 +59,18 @@ public class GameMode : MonoBehaviour
         CheckGameOver();
     }
 
-    void CheckGameOver()
+    private void CheckGameOver()
     {
         
     }
 
-    void GameOver(bool isWin)
+    private void GameOver(bool isWin)
     {
 
+    }
+
+    public GameObject GetPlayer()
+    {
+        return _player;
     }
 }
