@@ -5,12 +5,14 @@ using UnityEngine;
 public class EnemyController : Controller
 {
     // Start is called before the first frame update
+    public GameObject[] _armaturePool;
     public GameObject[] _fracturePool;
     public GameObject _weapon;
     public int _fractureCount = 14;
     public float _speed;
     void Start()
     {
+        PawnDeath();
     }
 
     // Update is called once per frame
@@ -20,23 +22,29 @@ public class EnemyController : Controller
     public override void PawnDeath()
     {
         for(int i = 0; i < 14; i++)
-        {
-            Transform childTransform = transform.GetChild(i);
-            _fracturePool[i].transform.position = childTransform.position;
-            _fracturePool[i].transform.rotation = childTransform.rotation;
-            _fracturePool[i].transform.localScale = childTransform.localScale;
+        { 
+            _fracturePool[i].transform.position = _armaturePool[i].transform.position;
+            _fracturePool[i].transform.rotation = _armaturePool[i].transform.rotation;
+            _fracturePool[i].transform.localScale = _armaturePool[i].transform.localScale;
             _fracturePool[i].SetActive(true);
-            childTransform.gameObject.SetActive(false);
-            //turn on the kinematic
+            _armaturePool[i].transform.gameObject.SetActive(false);
         }
-        if(!_weapon)
-            _weapon.GetComponent<Rigidbody>().useGravity = true;
+        GetComponentInChildren<BoxCollider>().enabled = false;
+
+        if(_weapon)
+        {
+            _weapon.transform.SetParent(null);
+            _weapon.GetComponent<Projectile>().enabled = true;
+            _weapon.GetComponent<Projectile>()._useGravity = true;
+            _weapon.GetComponent<BoxCollider>().enabled = true;
+
+            _weapon = null;
+        }
     }
 
     public void Move()
     {
-        Transform curTr = transform;
-        transform.localPosition *= _speed * GameMode._instance._deltaTime;
+        transform.Translate(Vector3.forward * _speed * GameMode.Instance._deltaTime);
     }
     public void Rotate(Quaternion lookRotation)
     {

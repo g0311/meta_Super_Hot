@@ -28,7 +28,7 @@ public class FSM : MonoBehaviour
     void Start()
     {
         _state = State.Idle;
-        _enemyController = GetComponent<EnemyController>();
+        _enemyController = GetComponentInChildren<EnemyController>();
         _enemyWeapon = _enemyController._weapon.GetComponent<Gun>();
     }
 
@@ -46,15 +46,7 @@ public class FSM : MonoBehaviour
                 }
             case State.Move:
                 {
-                    _animator.SetBool("isMoving", true);
-                    
-                    //Error space
-                    Vector3 directionToPlayer = _curPlayerPos - _enemyWeapon.transform.position;
-                    directionToPlayer.y = 0; //with out y axis rotation
-                    Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
-
-                    _enemyController.Rotate(lookRotation);
-                    _enemyController.Move();
+                    Move();
                     break;
                 }
             case State.Attack:
@@ -110,10 +102,10 @@ public class FSM : MonoBehaviour
     private bool CanAttackPlayer()
     {
         float dist = Vector3.Distance(_curPlayerPos, transform.position);
-        if(dist < 300)
+        if(dist < 30)
         {
             RaycastHit hit;
-            if (Physics.Raycast(_curPlayerPos, _enemyWeapon.transform.forward, out hit, Mathf.Infinity, _playerLayer))
+            if (Physics.Raycast(transform.position, _enemyWeapon.transform.forward, out hit, Mathf.Infinity, _playerLayer))
             {
                 return true;
             }
@@ -128,13 +120,26 @@ public class FSM : MonoBehaviour
         }
     }
 
+    private void Move()
+    {
+        _animator.SetBool("isMoving", true);
+
+        //Error space
+        Vector3 directionToPlayer = _curPlayerPos - _enemyWeapon.transform.position;
+        directionToPlayer.y = 0; //with out y axis rotation
+        Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+
+        _enemyController.Rotate(lookRotation);
+        _enemyController.Move();
+    }
+
     private IEnumerator AttackRoutine()
     {
         _isAttacking = true;
         _animator.SetBool("isMoving", false);
         _enemyWeapon.Fire();
 
-        yield return new WaitForSeconds(1.5f); // 1초 동안 대기, 필요에 따라 조정
+        yield return new WaitForSeconds(1.5f);
 
         _isAttacking = false;
     }
