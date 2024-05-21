@@ -25,6 +25,9 @@ public class GameMode : MonoBehaviour
 
     public GameObject _player;
 
+    //UI
+
+
     private void Awake()
     {
         if (_instance == null)
@@ -47,9 +50,9 @@ public class GameMode : MonoBehaviour
 
     public void SetDeltaTime(float moveDistance)
     {
-        if(_deltaTime <= moveDistance * 10)
+        if(_deltaTime <= moveDistance * 5)
         {
-            _deltaTime = moveDistance * 10;
+            _deltaTime = moveDistance * 5;
         }
     }
 

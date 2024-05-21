@@ -19,6 +19,7 @@ public class Hand : MonoBehaviour
                 if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
                 {
                     _weapon.GetComponent<Gun>().Fire();
+                    OVRInput.SetControllerVibration(0.5f, 0.5f);
                 } //
 
                 if (OVRInput.GetDown(OVRInput.Button.Three))
@@ -41,6 +42,7 @@ public class Hand : MonoBehaviour
                 if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
                 {
                     _weapon.GetComponent<Gun>().Fire();
+                    OVRInput.SetControllerVibration(0.5f, 0.5f);
                 }
 
                 if (OVRInput.GetDown(OVRInput.Button.One))

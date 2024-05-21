@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 public class FSM : MonoBehaviour
@@ -24,12 +25,15 @@ public class FSM : MonoBehaviour
     public Animator _animator;
     private bool _isAttacking = false;
 
+    private NavMeshAgent _nav;
+
     // Start is called before the first frame update
     void Start()
     {
         _state = State.Idle;
         _enemyController = GetComponentInChildren<EnemyController>();
         _enemyWeapon = _enemyController._weapon.GetComponent<Gun>();
+        _nav = _enemyController.GetComponentInChildren<NavMeshAgent>();
     }
 
     // Update is called once per frame
@@ -51,6 +55,7 @@ public class FSM : MonoBehaviour
                 }
             case State.Attack:
                 {
+                    Move();
                     if (!_isAttacking)
                     {
                         StartCoroutine(AttackRoutine());
@@ -101,18 +106,10 @@ public class FSM : MonoBehaviour
     }
     private bool CanAttackPlayer()
     {
-        float dist = Vector3.Distance(_curPlayerPos, transform.position);
-        if(dist < 30)
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, _enemyWeapon.transform.forward, out hit, Mathf.Infinity, _playerLayer))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, _enemyWeapon.transform.forward, out hit, Mathf.Infinity, _playerLayer))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return true;
         }
         else
         {
@@ -124,13 +121,28 @@ public class FSM : MonoBehaviour
     {
         _animator.SetBool("isMoving", true);
 
-        //Error space
-        Vector3 directionToPlayer = _curPlayerPos - _enemyWeapon.transform.position;
-        directionToPlayer.y = 0; //with out y axis rotation
-        Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+        //Vector3 directionToPlayer = _curPlayerPos - _enemyWeapon.transform.position;
+        //directionToPlayer.y = 0; //with out y axis rotation
+        //Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+        //_enemyController.Rotate(lookRotation);
 
-        _enemyController.Rotate(lookRotation);
-        _enemyController.Move();
+        _curPlayerPos.y = 0; //char rotate error >> x axis rotation
+        transform.LookAt(_curPlayerPos);
+        float dist = Vector3.Distance(_curPlayerPos, transform.position);
+        if (dist > _attackRange)
+        {
+            //speed error
+            float speed = 0.1f;
+            _nav.SetDestination(_curPlayerPos);
+            
+            _nav.speed = speed * GameMode.Instance._deltaTime;
+            //animation speed
+            GetComponentInChildren<Animator>().speed = speed * GameMode.Instance._deltaTime * 90;
+        }
+        else
+        {
+            _nav.SetDestination(transform.position);
+        }
     }
 
     private IEnumerator AttackRoutine()
@@ -139,7 +151,7 @@ public class FSM : MonoBehaviour
         _animator.SetBool("isMoving", false);
         _enemyWeapon.Fire();
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(10);
 
         _isAttacking = false;
     }

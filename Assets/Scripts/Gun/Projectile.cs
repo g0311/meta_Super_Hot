@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
 
         }
     }
-    
+
     public void SetMoveDirection(Vector3 moveDirection)
     {
         _moveDirection = moveDirection;

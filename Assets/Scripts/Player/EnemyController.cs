@@ -12,7 +12,7 @@ public class EnemyController : Controller
     public float _speed;
     void Start()
     {
-        PawnDeath();
+
     }
 
     // Update is called once per frame
@@ -40,11 +40,15 @@ public class EnemyController : Controller
 
             _weapon = null;
         }
+
+        GetComponent<FSM>().enabled = false;
     }
 
     public void Move()
     {
         transform.Translate(Vector3.forward * _speed * GameMode.Instance._deltaTime);
+        //animation speed
+        GetComponentInChildren<Animator>().speed = _speed * GameMode.Instance._deltaTime * 90;
     }
     public void Rotate(Quaternion lookRotation)
     {
