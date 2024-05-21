@@ -4000,7 +4000,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2546131381188352654}
-  m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4023,7 +4023,7 @@ Transform:
   - {fileID: 2546131380312873847}
   m_Father: {fileID: 4917916133304053922}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2546131381188352652
 Animator:
   serializedVersion: 5
@@ -6168,7 +6168,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -6230,7 +6230,7 @@ GameObject:
   - component: {fileID: 4929641576647573150}
   m_Layer: 0
   m_Name: NavGunEnemyPlayer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6263,7 +6263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a29322e474d61e44f8f46034a876c96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackRange: 100
+  _state: 0
+  _attackRange: 10
   _playerLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -6280,7 +6281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 013a388d8bc0a434cb79a2a64ae7cddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isAlive: 0
+  _isAlive: 1
   _armaturePool:
   - {fileID: 2546131380337832691}
   - {fileID: 2546131381140346554}

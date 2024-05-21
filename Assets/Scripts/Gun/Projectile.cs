@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(GameMode.Instance._deltaTime);
         Rigidbody rb = GetComponent<Rigidbody>();
         if (!_useGravity)
         {
@@ -28,7 +29,7 @@ public class Projectile : MonoBehaviour
     {
         if (_isKillable)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             {
                 GameMode._instance.PawnKilled(collision.gameObject);
                 _isKillable = false;

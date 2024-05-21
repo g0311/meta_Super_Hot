@@ -18,6 +18,7 @@ public class EnemyController : Controller
     // Update is called once per frame
     void Update()
     {
+
     }
     public override void PawnDeath()
     {
@@ -36,12 +37,12 @@ public class EnemyController : Controller
             _weapon.transform.SetParent(null);
             _weapon.GetComponent<Projectile>().enabled = true;
             _weapon.GetComponent<Projectile>()._useGravity = true;
+            _weapon.GetComponent<Rigidbody>().isKinematic = false;
             _weapon.GetComponent<BoxCollider>().enabled = true;
-
-            _weapon = null;
         }
 
         GetComponent<FSM>().enabled = false;
+        this.enabled = false;
     }
 
     public void Move()

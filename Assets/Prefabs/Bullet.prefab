@@ -261,6 +261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveDirection: {x: 0, y: 0, z: 0}
-  _speed: 30
+  _speed: 60
   _useGravity: 0
   _isKillable: 1

@@ -24,7 +24,6 @@ public class GameMode : MonoBehaviour
     }
 
     public GameObject _player;
-
     //UI
 
 
@@ -42,8 +41,7 @@ public class GameMode : MonoBehaviour
     }
     public float _deltaTime = 0;
 
-    // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
         _deltaTime = 0.01f;
     }
@@ -58,18 +56,25 @@ public class GameMode : MonoBehaviour
 
     public void PawnKilled(GameObject gameObject)
     {
-        gameObject.GetComponent<Controller>().PawnDeath();
+        if(gameObject == _player)
+            gameObject.GetComponent<Controller>().PawnDeath();
+        else
+            gameObject.GetComponentInParent<Controller>().PawnDeath();
         CheckGameOver();
     }
 
     private void CheckGameOver()
     {
-        
+        //check All Enemies dead or Player deads
     }
 
     private void GameOver(bool isWin)
     {
-
+        //print UI
+        if (isWin)
+            return;
+        else
+            return;
     }
 
     public GameObject GetPlayer()
