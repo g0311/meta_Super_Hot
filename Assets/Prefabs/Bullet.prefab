@@ -264,3 +264,4 @@ MonoBehaviour:
   _speed: 60
   _useGravity: 0
   _isKillable: 1
+  _hitParticle: {fileID: 1086280633655023863, guid: b260553b5490c7742be4242f338415bb, type: 3}

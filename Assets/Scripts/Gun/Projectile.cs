@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     public float _speed = 10;
     public bool _useGravity = false;
     public bool _isKillable = true;
-
+    public ParticleSystem _hitParticle;
     // Update is called once per frame
     void Update()
     {
@@ -31,10 +31,11 @@ public class Projectile : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             {
+                Vector3 contactPoint = collision.contacts[0].point;
+                Instantiate(_hitParticle, contactPoint, Quaternion.identity);
                 GameMode._instance.PawnKilled(collision.gameObject);
-                _isKillable = false;
+                Destroy(gameObject);
             }
-
         }
     }
 
