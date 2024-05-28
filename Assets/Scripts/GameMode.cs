@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameMode : MonoBehaviour
 {
     public static GameMode _instance;
-
     public static GameMode Instance
     {
         get
@@ -23,10 +22,6 @@ public class GameMode : MonoBehaviour
         }
     }
 
-    public GameObject _player;
-    //UI
-
-
     private void Awake()
     {
         if (_instance == null)
@@ -39,8 +34,17 @@ public class GameMode : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
     public float _deltaTime = 0;
+    public GameObject _player;
+    public int _killedCount = 0;
+    public Transform[] _spawnPoint;
 
+    private void Update()
+    {
+        //random pos enemy spawn
+        //spawn corutine
+    }
     private void LateUpdate()
     {
         _deltaTime = 0.01f;
@@ -56,25 +60,22 @@ public class GameMode : MonoBehaviour
 
     public void PawnKilled(GameObject gameObject)
     {
-        if(gameObject == _player)
+        if (gameObject == _player)
+        {
             gameObject.GetComponent<Controller>().PawnDeath();
+            GameOver(gameObject);
+        }
         else
+        {
             gameObject.GetComponentInParent<Controller>().PawnDeath();
-        CheckGameOver();
+            _killedCount++;
+        }
     }
 
-    private void CheckGameOver()
-    {
-        //check All Enemies dead or Player deads
-    }
-
-    private void GameOver(bool isWin)
+    private void GameOver(GameObject gameObject)
     {
         //print UI
-        if (isWin)
-            return;
-        else
-            return;
+        gameObject.GetComponent<PlayerController>().GameOver(_killedCount);
     }
 
     public GameObject GetPlayer()

@@ -61,11 +61,11 @@ public class LaserPtr : MonoBehaviour
     {
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
-            layser.material.color = new Color(255, 255, 255, 0.5f);
+            layser.material.color = new Color(0, 195, 255, 0.5f);
         }
         else if (OVRInput.GetUp(OVRInput.Button.One))
         {
-            layser.material.color = new Color(0, 195, 255, 0.5f);
+            layser.material.color = new Color(255, 0, 0, 0.5f);
         }
     }
 

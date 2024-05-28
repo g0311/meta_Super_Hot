@@ -40,9 +40,9 @@ public class EnemyController : Controller
             _weapon.GetComponent<Rigidbody>().isKinematic = false;
             _weapon.GetComponent<BoxCollider>().enabled = true;
         }
+        _isAlive = false;
 
         GetComponent<FSM>().enabled = false;
-        this.enabled = false;
     }
 
     public void Move()

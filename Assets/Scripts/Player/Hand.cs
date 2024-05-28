@@ -83,4 +83,17 @@ public class Hand : MonoBehaviour
             _weapon.transform.localRotation = Quaternion.Euler(0, 90, 90);
         }
     }
+
+    public void Dead()
+    {
+        if (_weapon)
+        {
+            Destroy(_weapon);
+            _weapon = null;
+        }
+        if(!_isLeft)
+        {
+            GetComponentInParent<LaserPointer>().enabled = true;
+        }
+    }
 }
