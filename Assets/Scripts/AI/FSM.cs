@@ -16,7 +16,7 @@ public class FSM : MonoBehaviour
     }
 
     public State _state;
-    private State _preState;
+    public State _preState;
     private Vector3 _curPlayerPos = new Vector3(0,0,0);
     private EnemyController _enemyController;
     private Gun _enemyWeapon;
@@ -156,7 +156,7 @@ public class FSM : MonoBehaviour
     private IEnumerator AttackRoutine()
     {
         _isAttacking = true;
-        _enemyWeapon.Fire();
+        _enemyWeapon.Fire(transform.forward);
 
         yield return new WaitForSeconds(3);
 

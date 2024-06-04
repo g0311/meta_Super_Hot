@@ -279,6 +279,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131380013164663
 GameObject:
   m_ObjectHideFlags: 0
@@ -445,6 +449,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131380034850111
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +649,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131380066140271
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,6 +1095,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131380159872512
 GameObject:
   m_ObjectHideFlags: 0
@@ -2223,6 +2239,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131380571622932
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,6 +2630,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131380737527008
 GameObject:
   m_ObjectHideFlags: 0
@@ -3205,6 +3229,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131380950213624
 GameObject:
   m_ObjectHideFlags: 0
@@ -3369,6 +3397,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131381004102766
 GameObject:
   m_ObjectHideFlags: 0
@@ -4054,7 +4086,7 @@ BoxCollider:
   m_GameObject: {fileID: 2546131381188352654}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.37104288, y: 1.9516201, z: 0.440669}
   m_Center: {x: -0.05674147, y: 0.97742045, z: -0.0059310184}
@@ -4190,6 +4222,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131381236526913
 GameObject:
   m_ObjectHideFlags: 0
@@ -4418,6 +4454,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131381358144797
 GameObject:
   m_ObjectHideFlags: 0
@@ -4550,6 +4590,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131381371703660
 GameObject:
   m_ObjectHideFlags: 0
@@ -5000,6 +5044,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131381643982260
 GameObject:
   m_ObjectHideFlags: 0
@@ -5564,6 +5612,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546131381732096850
 GameObject:
   m_ObjectHideFlags: 0
@@ -6089,6 +6141,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 0
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &2546628059800934887
 GameObject:
   m_ObjectHideFlags: 0
@@ -6156,6 +6212,10 @@ MonoBehaviour:
   _speed: 0.001
   _useGravity: 1
   _isKillable: 1
+  _hitParticle: {fileID: 0}
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!54 &417045585230319421
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6264,10 +6324,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _state: 0
+  _preState: 0
   _attackRange: 10
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 8
   _animator: {fileID: 2546131381188352652}
 --- !u!114 &6946309073720179923
 MonoBehaviour:

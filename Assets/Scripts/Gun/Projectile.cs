@@ -14,14 +14,22 @@ public class Projectile : MonoBehaviour
     {
         Debug.Log(GameMode.Instance._deltaTime);
         Rigidbody rb = GetComponent<Rigidbody>();
-        if (!_useGravity)
+        Ray ray = new Ray(transform.position, -transform.up);
+        if (Physics.RaycastAll(ray, 0.1f).Length == 0)
         {
-            rb.velocity = _moveDirection * GameMode.Instance._deltaTime * _speed;
+            if (!_useGravity)
+            {
+                rb.velocity = _moveDirection * GameMode.Instance._deltaTime * _speed;
+            }
+            else
+            {
+                _moveDirection += new Vector3(0, -7.0f, 0);
+                rb.velocity = _moveDirection * GameMode.Instance._deltaTime * _speed;
+            }
         }
         else
         {
-            _moveDirection += new Vector3(0, -7.0f, 0);
-            rb.velocity = _moveDirection * GameMode.Instance._deltaTime * _speed;
+            rb.velocity = Vector3.zero;
         }
     }
 

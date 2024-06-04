@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : Controller
 {
@@ -43,6 +44,7 @@ public class EnemyController : Controller
         _isAlive = false;
 
         GetComponent<FSM>().enabled = false;
+        GetComponent<NavMeshAgent>().enabled = false;
     }
 
     public void Move()

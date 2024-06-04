@@ -23,10 +23,10 @@ public class Gun : MonoBehaviour
         if (moveDirection == default)
         {
             moveDirection = new Vector3(0, 0, 1);
+            moveDirection = transform.TransformDirection(moveDirection);
         }
         GameObject obj = Instantiate(_bullet);
         //set direction 
-        moveDirection = transform.TransformDirection(moveDirection);
         obj.GetComponentInChildren<Projectile>().SetMoveDirection(moveDirection);
         //set transform
         obj.transform.position = _bulletStartTransform.position;

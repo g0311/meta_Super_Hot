@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameOverMenu : MonoBehaviour
+public class InGameMenu : MonoBehaviour
 {
     public Button _playBtn;
     public Button _exitBtn;
@@ -22,7 +22,7 @@ public class GameOverMenu : MonoBehaviour
     }
     void ExitBtn()
     {
-        SceneManager.LoadScene(0);
+        Application.Quit();
         return;
     }
 }

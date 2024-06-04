@@ -93,7 +93,7 @@ public class Hand : MonoBehaviour
         }
         if(!_isLeft)
         {
-            GetComponentInParent<LaserPointer>().enabled = true;
+            GetComponentInParent<LaserPtr>().enabled = true;
         }
     }
 }

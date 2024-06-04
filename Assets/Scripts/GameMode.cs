@@ -38,13 +38,14 @@ public class GameMode : MonoBehaviour
     public float _deltaTime = 0;
     public GameObject _player;
     public int _killedCount = 0;
+    public GameObject _enemyFactory;
     public Transform[] _spawnPoint;
 
-    private void Update()
+    private void Start()
     {
-        //random pos enemy spawn
-        //spawn corutine
+        StartCoroutine(SpawnPlayer());
     }
+
     private void LateUpdate()
     {
         _deltaTime = 0.01f;
@@ -74,12 +75,40 @@ public class GameMode : MonoBehaviour
 
     private void GameOver(GameObject gameObject)
     {
-        //print UI
+        //stop interact
         gameObject.GetComponent<PlayerController>().GameOver(_killedCount);
+        StopAllCoroutines();
+        foreach (Transform t in _spawnPoint)
+        {
+            if (t.childCount != 0)
+            {
+                t.GetChild(0).GetComponent<Controller>().PawnDeath();
+            }
+        }
+
     }
 
     public GameObject GetPlayer()
     {
         return _player;
+    }
+
+    IEnumerator SpawnPlayer()
+    {
+        while (true)
+        {
+            foreach (Transform t in _spawnPoint)
+            {
+                if (t.childCount == 0)
+                {
+                    int x = Random.Range(1, 6);
+                    if (x == 5)
+                    {
+                        Instantiate(_enemyFactory, t);
+                    }
+                }
+            }
+            yield return new WaitForSeconds(5);
+        }
     }
 }

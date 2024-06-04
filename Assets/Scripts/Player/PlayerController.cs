@@ -10,6 +10,7 @@ public class PlayerController : Controller
     public GameObject[] _fracturePool;
     public GameObject[] _hands;
     public GameObject _gameOverUI;
+    public GameObject _pauseUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,13 +37,18 @@ public class PlayerController : Controller
         {
             _fracturePool[i].SetActive(true);
         }
-        GetComponentInChildren<BoxCollider>().enabled = false;
 
         //hands -> dead -> mesh render off -> layser pointer on
         _hands[0].GetComponentInChildren<Hand>().Dead();
         _hands[1].GetComponentInChildren<Hand>().Dead();
 
-        Instantiate(_gameOverUI, _prevPos, Quaternion.identity);
+        StartCoroutine(GameOverCameraMove());
         _gameOverUI.GetComponentInChildren<Text>().text = "Kill Count = " + killCount;
+        _gameOverUI.SetActive(true);
     }
+    IEnumerator GameOverCameraMove()
+    {
+        transform.position = _prevPos;
+        yield return null;
+    }    
 }
