@@ -11,19 +11,12 @@ public class EnemyController : Controller
     public GameObject _weapon;
     public int _fractureCount = 14;
     public float _speed;
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     public override void PawnDeath()
     {
-        for(int i = 0; i < 14; i++)
+        _playerDeathSound.Play();
+
+        for (int i = 0; i < 14; i++)
         { 
             _fracturePool[i].transform.position = _armaturePool[i].transform.position;
             _fracturePool[i].transform.rotation = _armaturePool[i].transform.rotation;
@@ -38,6 +31,8 @@ public class EnemyController : Controller
             _weapon.transform.SetParent(null);
             _weapon.GetComponent<Projectile>().enabled = true;
             _weapon.GetComponent<Projectile>()._useGravity = true;
+            Vector3 direction = GameMode.Instance.GetPlayer().transform.position - transform.position;
+            _weapon.GetComponent<Projectile>().SetMoveDirection(direction * 7000);
             _weapon.GetComponent<Rigidbody>().isKinematic = false;
             _weapon.GetComponent<BoxCollider>().enabled = true;
         }
@@ -45,16 +40,17 @@ public class EnemyController : Controller
 
         GetComponent<FSM>().enabled = false;
         GetComponent<NavMeshAgent>().enabled = false;
+
+        GameMode.Instance._killedCount++;
     }
 
     public void Move()
     {
-        transform.Translate(Vector3.forward * _speed * GameMode.Instance._deltaTime);
-        //animation speed
-        GetComponentInChildren<Animator>().speed = _speed * GameMode.Instance._deltaTime * 90;
+        transform.Translate(Vector3.forward * _speed * GameMode.Instance._moveDistance);
+        GetComponentInChildren<Animator>().speed = _speed * GameMode.Instance._moveDistance * 90;
     }
     public void Rotate(Quaternion lookRotation)
     {
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, GameMode.Instance._deltaTime * 10);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, GameMode.Instance._moveDistance * 10);
     }
 }

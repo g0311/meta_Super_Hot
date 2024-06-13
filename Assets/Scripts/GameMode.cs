@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class GameMode : MonoBehaviour
 {
@@ -22,20 +23,7 @@ public class GameMode : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
-    
-    public float _deltaTime = 0;
+    public float _moveDistance = 0;
     public GameObject _player;
     public int _killedCount = 0;
     public GameObject _enemyFactory;
@@ -43,46 +31,34 @@ public class GameMode : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnPlayer());
+        if(_spawnPoint != null)
+            StartCoroutine(SpawnPlayer());
     }
 
     private void LateUpdate()
     {
-        _deltaTime = 0.01f;
+        _moveDistance = 0.001f;
     }
 
     public void SetDeltaTime(float moveDistance)
     {
-        if(_deltaTime <= moveDistance * 5)
-        {
-            _deltaTime = moveDistance * 5;
+        if(_moveDistance <= moveDistance * 10 && moveDistance * 10 < 0.2)
+        {// 시간이 목적 이상으로 빠르게 흐르지 않기 위해 일정 범위를 지정
+            _moveDistance = moveDistance * 10;
         }
     }
 
-    public void PawnKilled(GameObject gameObject)
+    public void GameOver()
     {
-        if (gameObject == _player)
-        {
-            gameObject.GetComponent<Controller>().PawnDeath();
-            GameOver(gameObject);
-        }
-        else
-        {
-            gameObject.GetComponentInParent<Controller>().PawnDeath();
-            _killedCount++;
-        }
-    }
-
-    private void GameOver(GameObject gameObject)
-    {
-        //stop interact
-        gameObject.GetComponent<PlayerController>().GameOver(_killedCount);
         StopAllCoroutines();
         foreach (Transform t in _spawnPoint)
         {
-            if (t.childCount != 0)
+            for (int i = 0; i < t.childCount; i++)
             {
-                t.GetChild(0).GetComponent<Controller>().PawnDeath();
+                if (t.GetChild(i).GetComponent<Controller>()._isAlive)
+                {
+                    t.GetChild(i).GetComponent<Controller>().PawnDeath();
+                }
             }
         }
 
@@ -99,16 +75,13 @@ public class GameMode : MonoBehaviour
         {
             foreach (Transform t in _spawnPoint)
             {
-                if (t.childCount == 0)
+                int x = Random.Range(1, 6);
+                if (x == 5)
                 {
-                    int x = Random.Range(1, 6);
-                    if (x == 5)
-                    {
-                        Instantiate(_enemyFactory, t);
-                    }
+                    Instantiate(_enemyFactory, t);
                 }
             }
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(3);
         }
     }
 }

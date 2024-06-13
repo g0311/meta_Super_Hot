@@ -1,6 +1,8 @@
+using Oculus.Interaction;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Projectile : MonoBehaviour
 {
@@ -9,41 +11,49 @@ public class Projectile : MonoBehaviour
     public bool _useGravity = false;
     public bool _isKillable = true;
     public ParticleSystem _hitParticle;
+    public LayerMask _terrainMask;
+
+    private float _gravity = -300.0f;
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(GameMode.Instance._deltaTime);
         Rigidbody rb = GetComponent<Rigidbody>();
-        Ray ray = new Ray(transform.position, -transform.up);
-        if (Physics.RaycastAll(ray, 0.1f).Length == 0)
+        if (rb != null)
         {
-            if (!_useGravity)
+            Ray ray = new Ray(transform.position, -Vector3.up);
+            if (!Physics.Raycast(ray, 0.3f, _terrainMask))
             {
-                rb.velocity = _moveDirection * GameMode.Instance._deltaTime * _speed;
+                if (!_useGravity)
+                {
+                    rb.velocity = _moveDirection * GameMode.Instance._moveDistance * _speed;
+                }
+                else
+                {
+                    _moveDirection += new Vector3(0, _gravity, 0);
+                    rb.velocity = _moveDirection * GameMode.Instance._moveDistance * _speed;
+                }
             }
             else
             {
-                _moveDirection += new Vector3(0, -7.0f, 0);
-                rb.velocity = _moveDirection * GameMode.Instance._deltaTime * _speed;
+                _moveDirection = Vector3.zero;
+                rb.velocity = _moveDirection;
             }
         }
-        else
-        {
-            rb.velocity = Vector3.zero;
-        }
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (_isKillable)
         {
             if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
             {
-                Vector3 contactPoint = collision.contacts[0].point;
-                Instantiate(_hitParticle, contactPoint, Quaternion.identity);
-                GameMode._instance.PawnKilled(collision.gameObject);
-                Destroy(gameObject);
+                if (_hitParticle)
+                {
+                    Vector3 contactPoint = transform.position;
+                    Instantiate(_hitParticle, contactPoint, Quaternion.identity);
+                }
+                collision.gameObject.GetComponentInParent<Controller>().PawnDeath();
             }
+            Destroy(gameObject);
         }
     }
 

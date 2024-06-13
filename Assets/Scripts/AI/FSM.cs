@@ -24,6 +24,7 @@ public class FSM : MonoBehaviour
     public float _attackRange = 10f; //attack range
     public Animator _animator;
     private bool _isAttacking = false;
+    public LayerMask _playerMask;
 
     private NavMeshAgent _nav;
 
@@ -94,7 +95,6 @@ public class FSM : MonoBehaviour
             _nav.ResetPath();
         }
     }
-
     private bool CanSeePlayer()
     {
         GameObject player = GameMode._instance.GetPlayer();
@@ -102,34 +102,32 @@ public class FSM : MonoBehaviour
         {
             _curPlayerPos = player.transform.position;
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, _curPlayerPos - transform.position, out hit, Mathf.Infinity))
+            if (Physics.Raycast(
+                transform.position,
+                _curPlayerPos - transform.position,
+                out hit,
+                Mathf.Infinity,
+                _playerMask)) //이거 고쳐야함
             {
-                if (hit.collider.tag == "Player")
-                {
-                    return true;
-                }
+                return true;
             }
         }
         return false;
     }
     private bool CanAttackPlayer()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, _attackRange))
+        GameObject player = GameMode._instance.GetPlayer();
+        if (player != null)
         {
-            if (hit.collider.tag == "Player")
+            _curPlayerPos = player.transform.position;
+            RaycastHit[] hit;
+            hit = Physics.RaycastAll(transform.position, _curPlayerPos - transform.position);
+            if (hit[1].collider.CompareTag("Player"))
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     private void Move()
@@ -138,12 +136,10 @@ public class FSM : MonoBehaviour
         if (dist > _attackRange || _state != State.Attack)
         {
             _animator.SetBool("isMoving", true);
-            //speed error
             _nav.SetDestination(_curPlayerPos);
             
-            _nav.speed = 30 * GameMode.Instance._deltaTime;
-            //animation speed
-            GetComponentInChildren<Animator>().speed = 15 * GameMode.Instance._deltaTime;
+            _nav.speed = 15 * GameMode.Instance._moveDistance;
+            _animator.speed = 10 * GameMode.Instance._moveDistance;
         }
     }
 

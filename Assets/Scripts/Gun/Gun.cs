@@ -6,20 +6,11 @@ public class Gun : MonoBehaviour
 {
     public GameObject _bullet;
     public Transform _bulletStartTransform;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public AudioSource _gunFireSound;
 
     public void Fire(Vector3 moveDirection = default)
     {
+        _gunFireSound.Play();
         if (moveDirection == default)
         {
             moveDirection = new Vector3(0, 0, 1);

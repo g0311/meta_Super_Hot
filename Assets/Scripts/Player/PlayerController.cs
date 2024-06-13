@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class PlayerController : Controller
 {
@@ -10,7 +11,7 @@ public class PlayerController : Controller
     public GameObject[] _fracturePool;
     public GameObject[] _hands;
     public GameObject _gameOverUI;
-    public GameObject _pauseUI;
+    public GameObject _playerPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,27 +29,39 @@ public class PlayerController : Controller
     public override void PawnDeath()
     {
         _isAlive = false;
-    }
+        _playerDeathSound.Play();
 
-    public void GameOver(int killCount)
-    {
-        //killed anim + UI
         for (int i = 0; i < 14; i++)
         {
             _fracturePool[i].SetActive(true);
+            _fracturePool[i].transform.SetParent(null);
         }
 
-        //hands -> dead -> mesh render off -> layser pointer on
+        GetComponent<CapsuleCollider>().enabled = false;
+        GetComponentInParent<CharacterController>().enabled = false;
         _hands[0].GetComponentInChildren<Hand>().Dead();
         _hands[1].GetComponentInChildren<Hand>().Dead();
 
-        StartCoroutine(GameOverCameraMove());
-        _gameOverUI.GetComponentInChildren<Text>().text = "Kill Count = " + killCount;
+        //killed anim + UI
+        Vector3 localp = transform.localPosition;
+        localp.z -= 3;
+        StartCoroutine(GameOverCameraMove(transform.TransformPoint(localp)));
+        _gameOverUI.GetComponentInChildren<Text>().text = "Kill Count = " + GameMode.Instance._killedCount;
         _gameOverUI.SetActive(true);
+
+        GameMode.Instance.GameOver();
     }
-    IEnumerator GameOverCameraMove()
+
+    IEnumerator GameOverCameraMove(Vector3 pos)
     {
-        transform.position = _prevPos;
-        yield return null;
+        float step = 0.1f;
+        while (Vector3.Distance(transform.position, pos) > 0.01f)
+        {
+            transform.position = Vector3.Lerp(transform.position, pos, step);
+            step += 0.02f;
+            Debug.Log(transform.position);
+            yield return null;
+        }
+        transform.position = pos;
     }    
 }
